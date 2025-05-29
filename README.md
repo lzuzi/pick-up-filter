@@ -1,15 +1,14 @@
 <div align="center"><h1>Pick Up Filter (PUF)</h1></div>
-<div align="center">Customize pick up item filter in Minecraft Java 1.21.5</div>
+<div align="center">Pick Up Filter (PUF) lets you control which items you pick up in Minecraft Java</div>
 <div><br></div>
 <div align="center">
-  <img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg" alt="Available on Modrinth" />
-  <img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/fabric-api_vector.svg" alt="Requires Fabric API" />
+  <a href="https://modrinth.com/mod/pick-up-filter"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg" alt="Available on Modrinth" /></a>
+  <a href="https://modrinth.com/mod/fabric-api"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/fabric-api_vector.svg" alt="Requires Fabric API" /></a>
 </div>
 <div><br></div>
 
 ![Enviroment](https://img.shields.io/badge/Enviroment-Client%20&%20Server-purple)
 ![Java 21](https://img.shields.io/badge/Language-Java%2021-orange)
-
 [![Modrinth](https://img.shields.io/modrinth/dt/9VTOF9VP?color=00AF5C&label=downloads&logo=modrinth)](https://modrinth.com/mod/pick-up-filter)
 
 ## Commands
