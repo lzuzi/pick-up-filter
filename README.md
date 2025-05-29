@@ -13,19 +13,19 @@
 
 ## Commands
 
-- Display avaible commands in-game chat
+- Display available commands in the in-game chat:
     - /pickupfilter help
-- On/Off control in-game chat
+- Toggle the filter on or off:
     - /pickupfilter on
     - /pickupfilter off
-- Add and Delete filtered items in-game chat
+- Add or remove filtered items:
     - /pickupfilter add minecraft:item_name
     - /pickupfilter del minecraft:item_name
-- List filtered items in-game chat
+- List all filtered items:
     - /pickupfilter list
-- Clear filtered items in-game chat
+- Clear all filtered items:
     - /pickupfilter clear
-- Reload filtered items in-game chat
+- Reload the filter configuration:
     - /pickupfilter reload
 
 NOTE: When you add or delete anything from filter via in-game chat its reloads automatically.
@@ -36,4 +36,4 @@ NOTE: When you add or delete anything from filter via in-game chat its reloads a
 
 ## License
 
-This mod is under the [GNU Lesser General Public License, v3.0](LICENSE).
+This mod is under the [[GNU Lesser General Public License, v3.0]](https://github.com/roaccat/pick-up-filter/blob/main/LICENSE).
