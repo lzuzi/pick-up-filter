@@ -8,7 +8,7 @@ Customize pick up item filter in Minecraft Java 1.21.5
 
 [![Modrinth](https://img.shields.io/modrinth/dt/9VTOF9VP?color=00AF5C&label=downloads&logo=modrinth)](https://modrinth.com/mod/pick-up-filter)
 
-### Commands
+## Commands
 
 - Display avaible commands in-game chat
     - /pickupfilter help
@@ -27,11 +27,15 @@ Customize pick up item filter in Minecraft Java 1.21.5
 
 NOTE: When you add or delete anything from filter via in-game chat its reloads automatically.
 
-### Version support
+## Version support
 
 | Version                 | Fabric | Forge | NeoForge |
 |-------------------------|--------|-------|----------|
 | **1.21.5**              | ✅    |   ⛔  |    ⛔    |
+
+## Contact
+- Discord: roaccat
+- Discord: lzuzi
 
 ## License
 
