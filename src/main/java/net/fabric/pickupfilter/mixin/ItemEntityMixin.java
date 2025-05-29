@@ -1,0 +1,35 @@
+package net.fabric.pickupfilter.mixin;
+
+import net.fabric.pickupfilter.PickUpFilter;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import net.minecraft.util.Identifier;
+import net.minecraft.registry.Registries;
+
+@Mixin(ItemEntity.class)
+public class ItemEntityMixin {
+    @Inject(method = "onPlayerCollision", at = @At("HEAD"), cancellable = true)
+    private void onPickup(PlayerEntity player, CallbackInfo ci) {
+        ItemStack stack = ((ItemEntity)(Object)this).getStack();
+
+        if(!PickUpFilter.filterEnabled) {
+            return;
+        }
+
+        if (!isWhitelisted(stack)) {
+            ci.cancel();
+        }
+    }
+
+    private boolean isWhitelisted(ItemStack stack) {
+        Identifier id = Registries.ITEM.getId(stack.getItem());
+        return PickUpFilter.WHITELIST.contains(id);
+    }
+}
