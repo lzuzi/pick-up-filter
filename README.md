@@ -35,7 +35,7 @@ NOTE: When you add or delete anything from filter via in-game chat its reloads a
 
 ## Contact
 - Discord: roaccat
-- Discord: lzuzi
+- Discord: zuzi
 
 ## License
 
