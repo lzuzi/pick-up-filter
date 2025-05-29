@@ -1,8 +1,12 @@
-# Pick Up Filter (PUF)
-Customize pick up item filter in Minecraft Java 1.21.5
+<div align="center"><h1>Pick Up Filter (PUF)</h1></div>
+<div align="center">Customize pick up item filter in Minecraft Java 1.21.5</div>
+<div><br></div>
+<div align="center">
+  <img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg" alt="Available on Modrinth" />
+  <img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/fabric-api_vector.svg" alt="Requires Fabric API" />
+</div>
+<div><br></div>
 
-![Enviroment](https://img.shields.io/badge/Enviroment-Client-purple)
-![Enviroment](https://img.shields.io/badge/Enviroment-Server-purple)
 ![Enviroment](https://img.shields.io/badge/Enviroment-Client%20&%20Server-purple)
 ![Java 21](https://img.shields.io/badge/Language-Java%2021-orange)
 
@@ -26,12 +30,6 @@ Customize pick up item filter in Minecraft Java 1.21.5
     - /pickupfilter reload
 
 NOTE: When you add or delete anything from filter via in-game chat its reloads automatically.
-
-## Version support
-
-| Version                 | Fabric | Forge | NeoForge |
-|-------------------------|--------|-------|----------|
-| **1.21.5**              | ✅    |   ⛔  |    ⛔    |
 
 ## Contact
 - Discord: roaccat
