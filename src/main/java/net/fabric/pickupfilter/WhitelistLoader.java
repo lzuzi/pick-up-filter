@@ -1,5 +1,14 @@
 package net.fabric.pickupfilter;
 
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Collections;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.nio.file.Files;
+import java.lang.reflect.Type;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -8,15 +17,6 @@ import com.google.gson.reflect.TypeToken;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 public class WhitelistLoader {
     private static final File CONFIG_FILE = new File(FabricLoader.getInstance().getConfigDir().toFile(), "pickupfilter.json");

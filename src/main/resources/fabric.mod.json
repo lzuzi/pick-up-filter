@@ -2,16 +2,17 @@
 	"schemaVersion": 1,
 	"id": "pick-up-filter",
 	"version": "${version}",
-	"name": "Pick Up Filter",
-	"description": "Configure a filter for item pick up.",
+	"name": "Pick Up Filter (PUF)",
+	"description": "Pick Up Filter (PUF) lets you control which items you pick up in Minecraft Java",
 	"authors": [
 		"roaccat & zuzi"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://modrinth.com/mod/pick-up-filter",
+		"sources": "https://github.com/roaccat/pick-up-filter",
+		"issues": "https://github.com/roaccat/pick-up-filter/issues"
 	},
-	"license": "MIT",
+	"license": "GPL-3.0-only",
 	"icon": "assets/pick-up-filter/icon.png",
 	"environment": "*",
 	"entrypoints": {

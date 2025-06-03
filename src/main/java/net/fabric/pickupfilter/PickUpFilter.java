@@ -1,22 +1,24 @@
 package net.fabric.pickupfilter;
 
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.StringArgumentType;
-
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.api.ModInitializer;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.registry.Registries;
+import java.util.Set;
+import java.util.HashSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.StringArgumentType;
 
-import java.util.HashSet;
-import java.util.Set;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+
+import net.minecraft.registry.Registries;
+import net.minecraft.server.command.CommandManager;
+import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.item.Item;
+import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.Formatting;
 
 public class PickUpFilter implements ModInitializer {
 	public static final String MOD_ID = "pick-up-filter";
@@ -31,22 +33,24 @@ public class PickUpFilter implements ModInitializer {
 		WHITELIST = WhitelistLoader.loadWhitelist();
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-			registerCommands(dispatcher);
+			registerCommands(dispatcher, "pickupfilter");
+			registerCommands(dispatcher, "puf");
 		});
 	}
 
-	private void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
-		dispatcher.register(CommandManager.literal("pickupfilter")
+	private void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher, String name) {
+		dispatcher.register(CommandManager.literal(name)
 				.then(CommandManager.literal("help")
 						.executes(context -> {
 							ServerCommandSource source = context.getSource();
-							context.getSource().sendMessage(Text.literal("/pickupfilter on - Opens the filter"));
-							context.getSource().sendMessage(Text.literal("/pickupfilter off - Close the filter."));
-							context.getSource().sendMessage(Text.literal("/pickupfilter add <item> - Adds item to the filter."));
-							context.getSource().sendMessage(Text.literal("/pickupfilter del <item> - Deletes item from the filter."));
-							context.getSource().sendMessage(Text.literal("/pickupfilter reload - Refreshes item filter."));
-							context.getSource().sendMessage(Text.literal("/pickupfilter list - Displays filtered items."));
-							context.getSource().sendMessage(Text.literal("/pickupfilter clear - Clears filtered items."));
+							context.getSource().sendMessage(Text.literal("[Pick Up Filter] Available Commands:"));
+							context.getSource().sendMessage(Text.literal("/" + name + " on - Opens the filter"));
+							context.getSource().sendMessage(Text.literal("/" + name + " off - Close the filter."));
+							context.getSource().sendMessage(Text.literal("/" + name + " add <item> - Adds item to the filter list."));
+							context.getSource().sendMessage(Text.literal("/" + name + " del <item> - Deletes item from the filter list."));
+							context.getSource().sendMessage(Text.literal("/" + name + " reload - Refreshes item filter list."));
+							context.getSource().sendMessage(Text.literal("/" + name + " list - Displays filtered items."));
+							context.getSource().sendMessage(Text.literal("/" + name + " clear - Clears filtered items list."));
 							return 1;
 						})
 				)
@@ -65,22 +69,27 @@ public class PickUpFilter implements ModInitializer {
 						.executes(context -> {
 							String state = StringArgumentType.getString(context, "state");
 							if (state.equalsIgnoreCase("on")) {
-								filterEnabled = true;
-								context.getSource().sendFeedback(() -> Text.of("Pick Up Filter opened!"), false);
-								LOGGER.info("Pick Up Filter opened!");
+								if (!filterEnabled) {
+									filterEnabled = true;
+									context.getSource().sendFeedback(() -> Text.literal("[Pick Up Filter] opened!").styled(style -> style.withColor(Formatting.GREEN)), false);
+								} else {
+									context.getSource().sendError(Text.literal("[Pick Up Filter] already opened!"));
+								}
 							} else if (state.equalsIgnoreCase("off")) {
-								filterEnabled = false;
-								context.getSource().sendFeedback(() -> Text.of("Pick Up Filter closed!"), false);
-								LOGGER.info("Pick Up Filter closed!");
+								if (filterEnabled) {
+									filterEnabled = false;
+									context.getSource().sendFeedback(() -> Text.literal("[Pick Up Filter] closed!").styled(style -> style.withColor(Formatting.GREEN)), false);
+								} else {
+									context.getSource().sendError(Text.literal("[Pick Up Filter] already closed!"));
+								}
 							} else if (state.equalsIgnoreCase("reload")) {
 								WHITELIST.clear();
 								WHITELIST.addAll(WhitelistLoader.loadWhitelist());
-								context.getSource().sendFeedback(() -> Text.of("Pick Up Filter reloaded!"), false);
-								LOGGER.info("Pick Up Filter reloaded!");
+								context.getSource().sendFeedback(() -> Text.literal("[Pick Up Filter] reloaded!").styled(style -> style.withColor(Formatting.GREEN)), false);
 							} else if (state.equalsIgnoreCase("add") || state.equalsIgnoreCase("del")) {
-								context.getSource().sendError(Text.literal("Please specify an item name with the '" + state + "' command."));
+								context.getSource().sendError(Text.literal("[Pick Up Filter] Please specify an item name with the '" + state + "' command."));
 							} else {
-								context.getSource().sendError(Text.literal("Pick Up Filter: Invalid parameter!"));
+								context.getSource().sendError(Text.literal("[Pick Up Filter] Invalid parameter!"));
 							}
 							return 1;
 						})
@@ -99,14 +108,14 @@ public class PickUpFilter implements ModInitializer {
 									String itemName = StringArgumentType.getString(context, "item_name");
 									Identifier itemId = Identifier.tryParse(itemName);
 									if (itemId == null || !itemId.getNamespace().equals("minecraft") || !Registries.ITEM.containsId(itemId)) {
-										context.getSource().sendError(Text.of("That item does not exist in Minecraft!"));
+										context.getSource().sendError(Text.literal("[Pick Up Filter] That item does not exist in Minecraft!"));
 										return 0;
 									}
 									if (WHITELIST.add(itemId)) {
 										WhitelistLoader.saveWhitelist(WHITELIST);
-										context.getSource().sendFeedback(() -> Text.of("Item added to whitelist: " + itemName), false);
+										context.getSource().sendFeedback(() -> Text.of("[Pick Up Filter] Item added to whitelist: " + itemDisplayName(Registries.ITEM.get(itemId))), false);
 									} else {
-										context.getSource().sendFeedback(() -> Text.of("Item is already in whitelist."), false);
+										context.getSource().sendFeedback(() -> Text.of("[Pick Up Filter] Item is already in whitelist."), false);
 									}
 									return 1;
 								})
@@ -126,14 +135,14 @@ public class PickUpFilter implements ModInitializer {
 									String itemName = StringArgumentType.getString(context, "item_name");
 									Identifier itemId = Identifier.tryParse(itemName);
 									if (itemId == null || !itemId.getNamespace().equals("minecraft") || !Registries.ITEM.containsId(itemId)) {
-										context.getSource().sendError(Text.of("That item does not exist in Minecraft!"));
+										context.getSource().sendError(Text.of("[Pick Up Filter] That item does not exist in Minecraft!"));
 										return 0;
 									}
 									if (WHITELIST.remove(itemId)) {
 										WhitelistLoader.saveWhitelist(WHITELIST);
-										context.getSource().sendFeedback(() -> Text.of("Item removed from whitelist: " + itemName), false);
+										context.getSource().sendFeedback(() -> Text.of("[Pick Up Filter] Item removed from whitelist: " + itemDisplayName(Registries.ITEM.get(itemId))), false);
 									} else {
-										context.getSource().sendFeedback(() -> Text.of("Item was not in whitelist."), false);
+										context.getSource().sendFeedback(() -> Text.of("[Pick Up Filter] Item was not in whitelist."), false);
 									}
 									return 1;
 								})
@@ -143,23 +152,28 @@ public class PickUpFilter implements ModInitializer {
 						.executes(context -> {
 							WHITELIST.clear();
 							WhitelistLoader.saveWhitelist(WHITELIST);
-							context.getSource().sendFeedback(() -> Text.of("Pick Up Filter list cleared!"), false);
-							LOGGER.info("Pick Up Filter list cleared!");
+							context.getSource().sendFeedback(() -> Text.literal("[Pick Up Filter] list cleared!").styled(style -> style.withColor(Formatting.GREEN)), false);
 							return 1;
 						})
 				)
 				.then(CommandManager.literal("list")
 						.executes(context -> {
 							if (WHITELIST.isEmpty()) {
-								context.getSource().sendFeedback(() -> Text.of("List is empty."), false);
+								context.getSource().sendFeedback(() -> Text.of("[Pick Up Filter] List is empty."), false);
 								return 1;
 							}
-							StringBuilder itemList = new StringBuilder("Whitelisted Items:\n");
-							WHITELIST.forEach(id -> itemList.append("- ").append(id.toString()).append("\n"));
+							StringBuilder itemList = new StringBuilder("[Pick Up Filter] Whitelisted Items:\n");
+							WHITELIST.forEach(id -> {
+								itemList.append("- ").append(itemDisplayName(Registries.ITEM.get(id))).append("\n");
+							});
 							context.getSource().sendFeedback(() -> Text.of(itemList.toString()), false);
 							return 1;
 						})
 				)
 		);
+	}
+
+	private String itemDisplayName(Item itemId) {
+		return itemId.getName().getString();
 	}
 }
