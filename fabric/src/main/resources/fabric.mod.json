@@ -1,0 +1,45 @@
+{
+	"schemaVersion": 1,
+	"id": "pick-up-filter",
+	"version": "${version}",
+	"name": "Pick Up Filter (PUF)",
+	"description": "Pick Up Filter (PUF) lets you control which items you pick up in Minecraft.",
+	"authors": [
+		"roaccat & zuzi"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/pick-up-filter",
+		"sources": "https://github.com/roaccat/pick-up-filter",
+		"issues": "https://github.com/roaccat/pick-up-filter/issues"
+	},
+	"license": "GPL-3.0-only",
+	"icon": "assets/pick-up-filter/textures/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.fabric.pickupfilter.PickUpFilter"
+		],
+		"fabric-datagen": [
+			"net.fabric.pickupfilter.PickUpFilterDataGenerator"
+		],
+		"client": [
+			"net.fabric.pickupfilter.PickUpFilterClient"
+		]
+	},
+	"mixins": [
+		"pick-up-filter.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.21.5",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*",
+		"modmenu": "*"
+	},
+	"custom": {
+		"modmenu:api": "1.0.0"
+	}
+}
