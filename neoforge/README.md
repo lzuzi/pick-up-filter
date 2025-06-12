@@ -3,7 +3,6 @@
 <div><br></div>
 <div align="center">
   <a href="https://modrinth.com/mod/pick-up-filter"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg" alt="Available on Modrinth" /></a>
-  <a href="https://modrinth.com/mod/fabric-api"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/fabric-api_vector.svg" alt="Requires Fabric API" /></a>
 </div>
 <div><br></div>
 
