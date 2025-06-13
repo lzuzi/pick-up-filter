@@ -1,0 +1,40 @@
+plugins {
+    id 'idea'
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.93'
+}
+
+dependencies {
+    implementation "net.neoforged:neoforge:${project.neo_version}"
+
+    implementation project(":common")
+}
+
+version = ""
+group = mod_group_id
+
+repositories {
+    mavenLocal()
+}
+
+base {
+    archivesName = "${mod_id}-v${mod_version}-neoforge-${minecraft_version}"
+}
+
+
+neoForge {
+    version = "21.5.75"
+
+    validateAccessTransformers = true
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
