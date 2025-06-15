@@ -10,6 +10,7 @@
 ![Enviroment](https://img.shields.io/badge/Enviroment-Client%20&%20Server-purple)
 ![Java 21](https://img.shields.io/badge/Language-Java%2021-orange)
 [![Modrinth](https://img.shields.io/modrinth/dt/9VTOF9VP?color=00AF5C&label=downloads&logo=modrinth)](https://modrinth.com/mod/pick-up-filter)
+[![CurseForge](https://img.shields.io/curseforge/dt/1287281?logo=curseforge&color=orange)](https://www.curseforge.com/minecraft/mc-mods/pick-up-filter-puf)
 
 ## Commands
 
