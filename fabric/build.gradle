@@ -1,0 +1,32 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}"
+}
+
+java {
+    withSourcesJar()
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    implementation project(":common")
+}
+
+evaluationDependsOn(":common")
+
+afterEvaluate {
+    tasks.named("jar", Jar).configure {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        from(project(":common").sourceSets.main.output)
+    }
+}
+
+version = ""
+group = maven_group
+
+base {
+    archivesName = "${mod_id}-v${mod_version}-fabric-${minecraft_version}"
+}

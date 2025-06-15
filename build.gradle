@@ -1,0 +1,62 @@
+plugins {
+    id 'java'
+    id 'java-library'
+}
+
+subprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+
+    java.toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+
+    repositories {
+        mavenCentral()
+        maven { url = "https://maven.fabricmc.net/" }
+        maven { url = "https://maven.neoforged.net/releases" }
+    }
+
+    def props = [
+            mod_id           : rootProject.findProperty("mod_id") ?: "unknown_id",
+            mod_license      : rootProject.findProperty("mod_license") ?: "GPL-3.0-only",
+            mod_version      : rootProject.findProperty("mod_version") ?: "1.0.0",
+            mod_name         : rootProject.findProperty("mod_name") ?: "Unnamed Mod",
+            mod_description  : rootProject.findProperty("mod_description") ?: "No description provided.",
+            mod_authors      : rootProject.findProperty("mod_authors") ?: "Anonymous",
+            minecraft_version: rootProject.findProperty("minecraft_version") ?: "1.21.5",
+            minecraft_version_range: rootProject.findProperty("minecraft_version_range") ?: "1.21.5",
+            neo_version_range: rootProject.findProperty("neo_version_range") ?: "1.21.5"
+    ]
+
+    tasks.withType(ProcessResources).configureEach {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+        inputs.properties(props)
+        filteringCharset = "UTF-8"
+
+        ["fabric.mod.json", "META-INF/neoforge.mods.toml"].each { pattern ->
+            filesMatching(pattern) {
+                expand props
+            }
+        }
+
+        from(project(':common').sourceSets.main.resources.srcDirs)
+    }
+
+    /*
+    // TODO: this one causes "Duplicate content roots detected" warning.
+    // jar property looks fixes this issue and project runs perfectly. gonna keep for future.
+    tasks.withType(JavaCompile).configureEach {
+        sourceSets.main.java.srcDirs += project(':common').sourceSets.main.java.srcDirs
+    }
+    */
+
+    /*
+    jar {
+        from {
+            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+            project(":common").sourceSets.main.output
+        }
+    }
+     */
+}

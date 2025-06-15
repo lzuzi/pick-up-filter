@@ -1,0 +1,51 @@
+plugins {
+    id 'net.neoforged.moddev' version "${moddevgradle_version}"
+}
+
+java {
+    withSourcesJar()
+}
+
+dependencies {
+    implementation "net.neoforged:neoforge:${project.neo_version}"
+
+    implementation project(":common")
+}
+
+evaluationDependsOn(":common")
+
+afterEvaluate {
+    tasks.named("jar", Jar).configure {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        from(project(":common").sourceSets.main.output)
+    }
+}
+
+version = ""
+group = mod_group_id
+
+base {
+    archivesName = "${mod_id}-v${mod_version}-neoforge-${minecraft_version}"
+}
+
+neoForge {
+    version = "${neo_version}"
+
+    validateAccessTransformers = true
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+        }
+    }
+
+    mods {
+        pickupfilter {
+            sourceSet sourceSets.main
+            sourceSet project(':common').sourceSets.main
+        }
+    }
+}

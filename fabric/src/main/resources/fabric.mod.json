@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": ["${mod_authors}"],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/pick-up-filter",
+    "sources": "https://github.com/roaccat/pick-up-filter",
+    "issues": "https://github.com/roaccat/pick-up-filter/issues"
+  },
+  "license": "${mod_license}",
+  "icon": "assets/pickupfilter/textures/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.fabric.pickupfilter.PickUpFilterFabric"
+    ]
+  },
+  "mixins": [
+    "pickupfilter.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*",
+    "modmenu": "*"
+  },
+  "custom": {
+    "modmenu:api": "1.0.0"
+  }
+}
