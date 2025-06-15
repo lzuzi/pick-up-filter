@@ -1,5 +1,5 @@
 <div align="center"><h1>Pick Up Filter (PUF)</h1></div>
-<div align="center">Pick Up Filter (PUF) lets you control which items you pick up in Minecraft Java</div>
+<div align="center">Pick Up Filter (PUF) lets you control which items you pick up in Minecraft.</div>
 <div><br></div>
 <div align="center">
   <a href="https://modrinth.com/mod/pick-up-filter"><img src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg" alt="Available on Modrinth" /></a>
