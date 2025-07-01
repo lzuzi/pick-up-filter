@@ -48,7 +48,7 @@ public class PickUpFilterNeoForge {
                 .then(Commands.literal("help")
                         .executes(context -> {
                             CommandSourceStack source = context.getSource();
-                            source.sendSuccess(() -> Component.literal("[Pick Up Filter] Available Commands:"), false);
+                            source.sendSuccess(() -> Component.literal("[Pick Up Filter] Available Commands:").withStyle(ChatFormatting.BLUE), false);
                             source.sendSuccess(() -> Component.literal("/" + name + " on - Opens the filter"), false);
                             source.sendSuccess(() -> Component.literal("/" + name + " off - Close the filter."), false);
                             source.sendSuccess(() -> Component.literal("/" + name + " add <item> - Adds item to the filter list."), false);
@@ -79,7 +79,7 @@ public class PickUpFilterNeoForge {
                                         filterEnabled = true;
                                         context.getSource().sendSuccess(() -> Component.literal("[Pick Up Filter] opened!").withStyle(ChatFormatting.GREEN), false);
                                     } else {
-                                        context.getSource().sendFailure(Component.literal("[Pick Up Filter] already opened!"));
+                                        context.getSource().sendFailure(Component.literal("[Pick Up Filter] already opened!").withStyle(ChatFormatting.YELLOW));
                                     }
                                 }
                                 case "off" -> {
@@ -87,7 +87,7 @@ public class PickUpFilterNeoForge {
                                         filterEnabled = false;
                                         context.getSource().sendSuccess(() -> Component.literal("[Pick Up Filter] closed!").withStyle(ChatFormatting.GREEN), false);
                                     } else {
-                                        context.getSource().sendFailure(Component.literal("[Pick Up Filter] already closed!"));
+                                        context.getSource().sendFailure(Component.literal("[Pick Up Filter] already closed!").withStyle(ChatFormatting.YELLOW));
                                     }
                                 }
                                 case "reload" -> {
@@ -99,7 +99,7 @@ public class PickUpFilterNeoForge {
                                     context.getSource().sendFailure(Component.literal("[Pick Up Filter] Please specify an item name with the '" + state + "' command."));
                                 }
                                 default -> {
-                                    context.getSource().sendFailure(Component.literal("[Pick Up Filter] Invalid parameter!"));
+                                    context.getSource().sendFailure(Component.literal("[Pick Up Filter] Invalid parameter!").withStyle(ChatFormatting.RED));
                                 }
                             }
                             return 1;
@@ -119,14 +119,14 @@ public class PickUpFilterNeoForge {
                                     String itemName = StringArgumentType.getString(context, "item_name");
                                     ResourceLocation itemId = ResourceLocation.tryParse(itemName);
                                     if (itemId == null || !itemId.getNamespace().equals("minecraft") || !BuiltInRegistries.ITEM.containsKey(itemId)) {
-                                        context.getSource().sendFailure(Component.literal("[Pick Up Filter] That item does not exist in Minecraft!"));
+                                        context.getSource().sendFailure(Component.literal("[Pick Up Filter] That item does not exist in Minecraft!").withStyle(ChatFormatting.RED));
                                         return 0;
                                     }
                                     if (WHITELIST.add(itemId)) {
                                         WhitelistLoaderNeoForge.saveWhitelist(WHITELIST);
                                         context.getSource().sendSuccess(() -> Component.literal("[Pick Up Filter] Item added to whitelist: " + itemDisplayName(BuiltInRegistries.ITEM.get(itemId))), false);
                                     } else {
-                                        context.getSource().sendSuccess(() -> Component.literal("[Pick Up Filter] Item is already in whitelist."), false);
+                                        context.getSource().sendSuccess(() -> Component.literal("[Pick Up Filter] Item is already in whitelist.").withStyle(ChatFormatting.GREEN), false);
                                     }
                                     return 1;
                                 })
@@ -146,14 +146,14 @@ public class PickUpFilterNeoForge {
                                     String itemName = StringArgumentType.getString(context, "item_name");
                                     ResourceLocation itemId = ResourceLocation.tryParse(itemName);
                                     if (itemId == null || !itemId.getNamespace().equals("minecraft") || !BuiltInRegistries.ITEM.containsKey(itemId)) {
-                                        context.getSource().sendFailure(Component.literal("[Pick Up Filter] That item does not exist in Minecraft!"));
+                                        context.getSource().sendFailure(Component.literal("[Pick Up Filter] That item does not exist in Minecraft!").withStyle(ChatFormatting.RED));
                                         return 0;
                                     }
                                     if (WHITELIST.remove(itemId)) {
                                         WhitelistLoaderNeoForge.saveWhitelist(WHITELIST);
-                                        context.getSource().sendSuccess(() -> Component.literal("[Pick Up Filter] Item removed from whitelist: " + itemDisplayName(BuiltInRegistries.ITEM.get(itemId))), false);
+                                        context.getSource().sendSuccess(() -> Component.literal("[Pick Up Filter] Item removed from whitelist: " + itemDisplayName(BuiltInRegistries.ITEM.get(itemId))).withStyle(ChatFormatting.GREEN), false);
                                     } else {
-                                        context.getSource().sendSuccess(() -> Component.literal("[Pick Up Filter] Item was not in whitelist."), false);
+                                        context.getSource().sendSuccess(() -> Component.literal("[Pick Up Filter] Item was not in whitelist.").withStyle(ChatFormatting.RED), false);
                                     }
                                     return 1;
                                 })
@@ -170,7 +170,7 @@ public class PickUpFilterNeoForge {
                 .then(Commands.literal("list")
                         .executes(context -> {
                             if (WHITELIST.isEmpty()) {
-                                context.getSource().sendSuccess(() -> Component.literal("[Pick Up Filter] List is empty."), false);
+                                context.getSource().sendSuccess(() -> Component.literal("[Pick Up Filter] List is empty.").withStyle(ChatFormatting.RED), false);
                                 return 1;
                             }
                             StringBuilder itemList = new StringBuilder("[Pick Up Filter] Whitelisted Items:\n");
