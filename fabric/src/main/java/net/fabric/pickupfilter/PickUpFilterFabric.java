@@ -41,7 +41,7 @@ public class PickUpFilterFabric implements ModInitializer {
                 .then(CommandManager.literal("help")
                         .executes(context -> {
                             ServerCommandSource source = context.getSource();
-                            context.getSource().sendMessage(Text.literal("[Pick Up Filter] Available Commands:"));
+                            context.getSource().sendMessage(Text.literal("[Pick Up Filter] Available Commands:").styled(style -> style.withColor(Formatting.BLUE)));
                             context.getSource().sendMessage(Text.literal("/" + name + " on - Opens the filter"));
                             context.getSource().sendMessage(Text.literal("/" + name + " off - Close the filter."));
                             context.getSource().sendMessage(Text.literal("/" + name + " add <item> - Adds item to the filter list."));
@@ -71,14 +71,14 @@ public class PickUpFilterFabric implements ModInitializer {
                                     filterEnabled = true;
                                     context.getSource().sendFeedback(() -> Text.literal("[Pick Up Filter] opened!").styled(style -> style.withColor(Formatting.GREEN)), false);
                                 } else {
-                                    context.getSource().sendError(Text.literal("[Pick Up Filter] already opened!"));
+                                    context.getSource().sendError(Text.literal("[Pick Up Filter] already opened!").styled(style -> style.withColor(Formatting.YELLOW)));
                                 }
                             } else if (state.equalsIgnoreCase("off")) {
                                 if (filterEnabled) {
                                     filterEnabled = false;
                                     context.getSource().sendFeedback(() -> Text.literal("[Pick Up Filter] closed!").styled(style -> style.withColor(Formatting.GREEN)), false);
                                 } else {
-                                    context.getSource().sendError(Text.literal("[Pick Up Filter] already closed!"));
+                                    context.getSource().sendError(Text.literal("[Pick Up Filter] already closed!").styled(style -> style.withColor(Formatting.YELLOW)));
                                 }
                             } else if (state.equalsIgnoreCase("reload")) {
                                 WHITELIST.clear();
@@ -87,7 +87,7 @@ public class PickUpFilterFabric implements ModInitializer {
                             } else if (state.equalsIgnoreCase("add") || state.equalsIgnoreCase("del")) {
                                 context.getSource().sendError(Text.literal("[Pick Up Filter] Please specify an item name with the '" + state + "' command."));
                             } else {
-                                context.getSource().sendError(Text.literal("[Pick Up Filter] Invalid parameter!"));
+                                context.getSource().sendError(Text.literal("[Pick Up Filter] Invalid parameter!").styled(style -> style.withColor(Formatting.RED)));
                             }
                             return 1;
                         })
@@ -106,14 +106,14 @@ public class PickUpFilterFabric implements ModInitializer {
                                     String itemName = StringArgumentType.getString(context, "item_name");
                                     Identifier itemId = Identifier.tryParse(itemName);
                                     if (itemId == null || !itemId.getNamespace().equals("minecraft") || !Registries.ITEM.containsId(itemId)) {
-                                        context.getSource().sendError(Text.literal("[Pick Up Filter] That item does not exist in Minecraft!"));
+                                        context.getSource().sendError(Text.literal("[Pick Up Filter] That item does not exist in Minecraft!").copy().styled(style -> style.withColor(Formatting.RED)));
                                         return 0;
                                     }
                                     if (WHITELIST.add(itemId)) {
                                         WhitelistLoaderFabric.saveWhitelist(WHITELIST);
                                         context.getSource().sendFeedback(() -> Text.of("[Pick Up Filter] Item added to whitelist: " + itemDisplayName(Registries.ITEM.get(itemId))), false);
                                     } else {
-                                        context.getSource().sendFeedback(() -> Text.of("[Pick Up Filter] Item is already in whitelist."), false);
+                                        context.getSource().sendFeedback(() -> Text.of("[Pick Up Filter] Item is already in whitelist.").copy().styled(style -> style.withColor(Formatting.GREEN)), false);
                                     }
                                     return 1;
                                 })
@@ -133,14 +133,14 @@ public class PickUpFilterFabric implements ModInitializer {
                                     String itemName = StringArgumentType.getString(context, "item_name");
                                     Identifier itemId = Identifier.tryParse(itemName);
                                     if (itemId == null || !itemId.getNamespace().equals("minecraft") || !Registries.ITEM.containsId(itemId)) {
-                                        context.getSource().sendError(Text.of("[Pick Up Filter] That item does not exist in Minecraft!"));
+                                        context.getSource().sendError(Text.of("[Pick Up Filter] That item does not exist in Minecraft!").copy().styled(style -> style.withColor(Formatting.RED)));
                                         return 0;
                                     }
                                     if (WHITELIST.remove(itemId)) {
                                         WhitelistLoaderFabric.saveWhitelist(WHITELIST);
-                                        context.getSource().sendFeedback(() -> Text.of("[Pick Up Filter] Item removed from whitelist: " + itemDisplayName(Registries.ITEM.get(itemId))), false);
+                                        context.getSource().sendFeedback(() -> Text.of("[Pick Up Filter] Item removed from whitelist: " + itemDisplayName(Registries.ITEM.get(itemId))).copy().styled(style -> style.withColor(Formatting.GREEN)), false);
                                     } else {
-                                        context.getSource().sendFeedback(() -> Text.of("[Pick Up Filter] Item was not in whitelist."), false);
+                                        context.getSource().sendFeedback(() -> Text.of("[Pick Up Filter] Item was not in whitelist.").copy().styled(style -> style.withColor(Formatting.RED)), false);
                                     }
                                     return 1;
                                 })
@@ -157,7 +157,7 @@ public class PickUpFilterFabric implements ModInitializer {
                 .then(CommandManager.literal("list")
                         .executes(context -> {
                             if (WHITELIST.isEmpty()) {
-                                context.getSource().sendFeedback(() -> Text.of("[Pick Up Filter] List is empty."), false);
+                                context.getSource().sendFeedback(() -> Text.of("[Pick Up Filter] List is empty.").copy().styled(style -> style.withColor(Formatting.RED)), false);
                                 return 1;
                             }
                             StringBuilder itemList = new StringBuilder("[Pick Up Filter] Whitelisted Items:\n");
