@@ -32,6 +32,7 @@
 NOTE: When you add or delete anything from filter via in-game chat its reloads automatically.
 
 ## Contact
+- Discord: roaccat
 - Discord: zuzi
 
 ## License
