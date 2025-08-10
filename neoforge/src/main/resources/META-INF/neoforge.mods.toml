@@ -1,5 +1,5 @@
 license="${mod_license}"
-issueTrackerURL="https://github.com/roaccat/pick-up-filter/issues/"
+issueTrackerURL="https://github.com/lzuzi/pick-up-filter/issues/"
 
 
 [[mods]]
@@ -7,7 +7,7 @@ modId="pickupfilter"
 version="${mod_version}"
 displayName="${mod_name}"
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
-displayURL="https://github.com/roaccat/pick-up-filter/"
+displayURL="https://github.com/lzuzi/pick-up-filter/"
 logoFile="assets/pickupfilter/textures/icon.png"
 #credits="" #optional
 authors="${mod_authors}"
