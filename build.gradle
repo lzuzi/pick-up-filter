@@ -19,13 +19,13 @@ subprojects {
     def props = [
             mod_id           : rootProject.findProperty("mod_id") ?: "unknown_id",
             mod_license      : rootProject.findProperty("mod_license") ?: "GPL-3.0-only",
-            mod_version      : rootProject.findProperty("mod_version") ?: "1.0.0",
+            mod_version      : rootProject.findProperty("mod_version") ?: "1.0.6",
             mod_name         : rootProject.findProperty("mod_name") ?: "Unnamed Mod",
             mod_description  : rootProject.findProperty("mod_description") ?: "No description provided.",
             mod_authors      : rootProject.findProperty("mod_authors") ?: "Anonymous",
-            minecraft_version: rootProject.findProperty("minecraft_version") ?: "1.21.5",
-            minecraft_version_range: rootProject.findProperty("minecraft_version_range") ?: "1.21.5",
-            neo_version_range: rootProject.findProperty("neo_version_range") ?: "1.21.5"
+            minecraft_version: rootProject.findProperty("minecraft_version") ?: "1.21.6",
+            minecraft_version_range: rootProject.findProperty("minecraft_version_range") ?: "1.21.6, 1.22",
+            neo_version_range: rootProject.findProperty("neo_version_range") ?: "1.21.6"
     ]
 
     tasks.withType(ProcessResources).configureEach {
