@@ -36,4 +36,4 @@ NOTE: When you add or delete anything from filter via in-game chat its reloads a
 
 ## License
 
-This mod is under the [[GNU Lesser General Public License, v3.0]](https://github.com/roaccat/pick-up-filter/blob/main/LICENSE).
+This mod is under the [[GNU Lesser General Public License, v3.0]](https://github.com/lzuzi/pick-up-filter/blob/main/LICENSE).
