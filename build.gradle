@@ -1,8 +1,3 @@
-plugins {
-    id 'java'
-    id 'java-library'
-}
-
 subprojects {
     apply plugin: 'idea'
     apply plugin: 'java'
@@ -10,10 +5,33 @@ subprojects {
 
     java.toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 
+    java {
+        withSourcesJar()
+    }
+
     repositories {
+        gradlePluginPortal()
         mavenCentral()
-        maven { url = "https://maven.fabricmc.net/" }
-        maven { url = "https://maven.neoforged.net/releases" }
+        maven {
+            name = 'FabricMC'
+            url = 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = 'NeoForged'
+            url = 'https://maven.neoforged.net/releases'
+        }
+        maven {
+            name = 'MinecraftForge'
+            url = 'https://maven.minecraftforge.net/'
+        }
+        maven {
+            name = 'ParchmentMC'
+            url = 'https://maven.parchmentmc.org/'
+        }
+        maven {
+            name = 'LibrariesMinecraft'
+            url = 'https://libraries.minecraft.net/'
+        }
     }
 
     def props = [
@@ -25,7 +43,9 @@ subprojects {
             mod_authors      : rootProject.findProperty("mod_authors") ?: "Anonymous",
             minecraft_version: rootProject.findProperty("minecraft_version") ?: "1.21.5",
             minecraft_version_range: rootProject.findProperty("minecraft_version_range") ?: "1.21.5",
-            neo_version_range: rootProject.findProperty("neo_version_range") ?: "1.21.5"
+            neo_version_range: rootProject.findProperty("neo_version_range") ?: "1.21.5",
+            loader_version_range: rootProject.findProperty("loader_version_range") ?: "[58,)",
+            forge_version_range: rootProject.findProperty("forge_version_range") ?: "[58,)"
     ]
 
     tasks.withType(ProcessResources).configureEach {
@@ -34,7 +54,7 @@ subprojects {
         inputs.properties(props)
         filteringCharset = "UTF-8"
 
-        ["fabric.mod.json", "META-INF/neoforge.mods.toml"].each { pattern ->
+        ["fabric.mod.json", "META-INF/neoforge.mods.toml", "META-INF/mods.toml", "pack.mcmeta"].each { pattern ->
             filesMatching(pattern) {
                 expand props
             }
@@ -43,15 +63,16 @@ subprojects {
         from(project(':common').sourceSets.main.resources.srcDirs)
     }
 
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+    }
+
     /*
     // TODO: this one causes "Duplicate content roots detected" warning.
     // jar property looks fixes this issue and project runs perfectly. gonna keep for future.
     tasks.withType(JavaCompile).configureEach {
         sourceSets.main.java.srcDirs += project(':common').sourceSets.main.java.srcDirs
     }
-    */
-
-    /*
     jar {
         from {
             duplicatesStrategy = DuplicatesStrategy.EXCLUDE

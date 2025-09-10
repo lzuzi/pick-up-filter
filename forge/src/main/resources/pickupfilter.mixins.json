@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.forge.pickupfilter.mixin",
+  "refmap": "pickupfilter.refmap.json",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ItemEntityMixinForge"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

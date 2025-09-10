@@ -2,10 +2,6 @@ plugins {
     id 'net.neoforged.moddev' version "${moddevgradle_version}"
 }
 
-java {
-    withSourcesJar()
-}
-
 dependencies {
     implementation "net.neoforged:neoforge:${project.neo_version}"
 
